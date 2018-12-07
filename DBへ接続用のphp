@@ -1,0 +1,18 @@
+<?php  
+//  connect.phpなどとネーミングしておく
+
+// データベースとやり取りする関数
+function dbconnect( $sql='' ){
+	$host = 'localhost';
+	$dbname = 'phptest';
+  $dsn="mysql:dbname=$dbname;host=$host;charset=utf8;";
+	$user="userName";
+	$password="password";
+	$dbh=new PDO($dsn,$user,$password);
+	// PDOのエラーモードを ONにする
+	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	// 構文チェックと実行を分離する 必須
+	$dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+	return $dbh;
+}
+?>
