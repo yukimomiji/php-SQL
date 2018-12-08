@@ -1,0 +1,14 @@
+SELECT `shohin_id`, `shohin_mei`, `tanka`
+FROM `shohin`
+WHERE tanka >= 100
+ORDER BY tanka
+DESC LIMIT 10
+
+
+-- 解説
+
+-- 「>=」で100に等しい、またそれ以上ということ
+-- 「tanka」という「フィールド名」で「DESC」という高い順ソート(低い順は「ASC」)を指定し最大検索件数「LIMIT」を10に指定
+
+-- 単語の前後に%をつけて検索すると・・・
+-- (前)%ペン → ペンで終わる語句  (後ろ)ペン% → ペンで始まる語句 と指定可能
