@@ -1,0 +1,13 @@
+-- 得意先ごと月ごとの集計
+SELECT
+    DATE_FORMAT(hiduke , '%Y-%m') as 月, SUM(tanka * num) as 合計
+FROM `shosai` AS a
+  	LEFT JOIN shohin AS n
+    ON a.shohin_id = n.shohin_id
+    LEFT JOIN denpyo AS d
+    ON a.denpyo_id = d.denpyo_id
+    LEFT JOIN tokui AS t
+    ON d.tokui_id = t.tokui_id
+WHERE hiduke BETWEEN "2018-11-1" AND "2018-12-30"
+AND d.tokui_id = 54
+GROUP BY DATE_FORMAT(hiduke , '%Y%m')
