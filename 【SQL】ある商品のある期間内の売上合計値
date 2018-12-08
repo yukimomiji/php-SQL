@@ -1,0 +1,9 @@
+SELECT shohin_mei , SUM(tanka * num) AS gokei
+FROM shosai AS a
+  	LEFT JOIN shohin AS n
+    ON a.shohin_id = n.shohin_id
+    LEFT JOIN denpyo AS d
+    ON a.denpyo_id = d.denpyo_id
+WHERE shohin_mei = "えんぴつ"
+-- 11月1日から30日「～の間(between)」
+AND hiduke BETWEEN "2018-11-1" AND "2018-11-30";
