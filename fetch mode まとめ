@@ -1,0 +1,49 @@
+
+include 'connect.php';
+echo "<style>pre{font:1em/120% mairyo;}h4{margin-bottom: 0}</style><pre> " .PHP_EOL;;
+$k_id = "7" ;
+
+// $sql="SELECT * FROM kokyak  WHERE k_id= :k_id ";
+
+$sql="SELECT * FROM kokyak order by k_id desc;";
+$stmt = $dbh->prepare( $sql );
+// $stmt->bindParam(':k_id', $k_id);
+$stmt->execute();
+echo '
+fetchAll()
+'.PHP_EOL;;
+	print_r($stmt->fetchAll());
+
+echo '
+fetchAll(PDO::FETCH_COLUMN, 7)
+'.PHP_EOL;;
+	$stmt->execute();
+	print_r($stmt->fetchAll(PDO::FETCH_COLUMN, 7));
+
+echo '
+fetch(PDO::FETCH_NUM)
+'.PHP_EOL;;
+	$stmt->execute();
+		print_r($stmt->fetch(PDO::FETCH_NUM));
+
+echo '
+fetch(PDO::FETCH_ASSOC)
+'.PHP_EOL;;
+	$stmt->execute();
+		print_r($stmt->fetch(PDO::FETCH_ASSOC));
+
+echo "
+fetch(PDO::FETCH_OBJ): 
+".PHP_EOL;;
+	$stmt->execute();
+			$obj=$stmt->fetch(PDO::FETCH_OBJ);
+			echo $obj->k_name  ;
+
+
+echo '
+fetchせずに直接回す
+'.PHP_EOL;;
+$stmt->execute();
+	foreach ($stmt as $key => $value) {
+		echo $key . "\t". print_r( $value) .PHP_EOL;
+	}
