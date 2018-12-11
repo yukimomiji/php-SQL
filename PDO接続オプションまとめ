@@ -1,0 +1,18 @@
+
+エラーの詳細を出す
+PDOで接続した際のデフォルト値のエラーは返さない仕様｡
+
+アカウント名､パスワード､テーブル名､SQL文の間違いに気づきにくいので開発維持にはオプションとしてこれを追加してください
+
+$pdo = new PDO($dsn, $user, $pwd);のあとにこれ↓
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+デフォルトフェッチモードは変更しろ
+フェッチモードを指定せず単にfetch()した場合、デフォルトではPDO::FETCH_BOTHが選択されており、あまり使い勝手がよくありません。デフォルトのフェッチモードは変更できるので、もっと使いやすいものに変えておくといいです。フェッチモードを変えることで、foreachが使いやすくなります。
+
+ //PDOオブジェクト自体に指定。レスポンスは常に連想配列形式で取得するようになる
+$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+エミュレート機能 はオフにしろ
+SQLインジェクションの対策としてプリペアドステートメントの使用が推奨されますが、PDOにおいてデフォルトではPDO::ATTR_EMULATE_PREPARESがtrueに設定されており、この状態ではprepareでプレースホルダを指定してもエミュレートされ、実際にMySQLにわたる際にはプリペアドステートメントではなくなってしまいます（普通にSQL発行するのと同じ）。この状態では、 自動エスケープはされるものの 、SQLインジェクションの危険があると思います。
+
+ $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
